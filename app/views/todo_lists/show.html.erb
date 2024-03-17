@@ -1,0 +1,14 @@
+<h2> To Do List Details </h2>
+
+<p> Id: <%= @todo_list.id %> </p>
+<p> Name: <%= @todo_list.name %></p>
+
+<div>
+  <%= link_to 'Edit To Do List', edit_todo_list_path %>
+  <%= link_to 'Delete To Do List', todo_list_path(@todo_list),
+    data: {
+      turbo_method: :delete,
+      turbo_confirm: 'Are you sure you want to delete the resource?'
+    } %>
+</div>
+<div> <%= link_to 'Back to index', todo_lists_path %> </div>

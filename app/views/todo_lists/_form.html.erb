@@ -1,0 +1,11 @@
+<%= form_with model: @todo_list do |form| %>
+  <% @todo_list.errors.full_messages.each do |error| %>
+    <div> <%= error %> </div>
+  <% end %>
+
+  <div>
+    <%= form.text_field :name, placeholder: 'To Do List Name' %>
+  </div>
+
+  <%= form.submit 'Sumbit' %>
+<% end %>

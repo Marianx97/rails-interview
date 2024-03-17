@@ -1,9 +1,11 @@
-<%= link_to 'Add Todo List', new_todo_list_path %>
+<h2> My To Do Lists </h2>
 
 <div>
   <% @todo_lists.each do |todo_list| %>
     <div>
-      #<%= todo_list.id %> | <%= todo_list.name %>
+      #<%= todo_list.id %> | <%= link_to todo_list.name, todo_list_path(todo_list) %>
     </div>
   <% end %>
 </div>
+
+<%= link_to 'Add To Do List', new_todo_list_path %>
