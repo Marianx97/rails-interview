@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-describe Api::TodoListsItemsController do
+describe Api::ItemsController do
   render_views
 
   describe 'GET index' do
     let!(:todo_list) { TodoList.create(name: 'ToDo List #1') }
     let!(:todo_list_item) do
-      TodoListItem.create(
+      Item.create(
         name: 'Item #1',
         description: 'First item',
         todo_list_id: todo_list.id
@@ -69,7 +69,7 @@ describe Api::TodoListsItemsController do
         expect {
           post :create, format: :html, params: {
             todo_list_id: todo_list.id,
-            todo_lists_item: {
+            item: {
               "name": "New Item",
               "description": "New item for todo list"
             }
@@ -83,7 +83,7 @@ describe Api::TodoListsItemsController do
         it 'returns an error code' do
           post :create, format: :json, params: {
             todo_list_id: (todo_list.id + 1),
-            todo_lists_item: {
+            item: {
               "name": "New Item",
               "description": "New item for todo list"
             }
@@ -95,7 +95,7 @@ describe Api::TodoListsItemsController do
         it 'includes an error message' do
           post :create, format: :json, params: {
             todo_list_id: (todo_list.id + 1),
-            todo_lists_item: {
+            item: {
               "name": "New Item",
               "description": "New item for todo list"
             }
@@ -112,7 +112,7 @@ describe Api::TodoListsItemsController do
           it 'returns an error code' do
             post :create, format: :json, params: {
               todo_list_id: todo_list.id,
-              todo_lists_item: { "name": "", "description": "" }
+              item: { "name": "", "description": "" }
             }
 
             expect(response.status).to eq(422)
@@ -121,7 +121,7 @@ describe Api::TodoListsItemsController do
           it 'returns an error message' do
             post :create, format: :json, params: {
               todo_list_id: todo_list.id,
-              todo_lists_item: { "name": "", "description": "" }
+              item: { "name": "", "description": "" }
             }
 
             response_body = JSON.parse(response.body)
@@ -134,7 +134,7 @@ describe Api::TodoListsItemsController do
           it 'returns a success code' do
             post :create, format: :json, params: {
               todo_list_id: todo_list.id,
-              todo_lists_item: {
+              item: {
                 "name": "New Item",
                 "description": "New item for todo list"
               }
@@ -146,7 +146,7 @@ describe Api::TodoListsItemsController do
           it 'returns a valid response' do
             post :create, format: :json, params: {
               todo_list_id: todo_list.id,
-              todo_lists_item: {
+              item: {
                 "name": "New Item",
                 "description": "New item for todo list"
               }
@@ -167,7 +167,7 @@ describe Api::TodoListsItemsController do
   describe 'PUT update' do
     let!(:todo_list) { TodoList.create(name: 'ToDo List #1') }
     let!(:todo_list_item) do
-      TodoListItem.create(
+      Item.create(
         name: 'Item #1',
         description: 'First item',
         todo_list_id: todo_list.id
@@ -180,7 +180,7 @@ describe Api::TodoListsItemsController do
           put :update, format: :html, params: {
             todo_list_id: todo_list.id,
             id: todo_list_item.id,
-            todo_lists_item: { "name": "New name" }
+            item: { "name": "New name" }
           }
         }.to raise_error(ActionController::RoutingError, 'Not supported format')
       end
@@ -192,7 +192,7 @@ describe Api::TodoListsItemsController do
           put :update, format: :json, params: {
             todo_list_id: (todo_list.id + 1),
             id: todo_list_item.id,
-            todo_lists_item: { "name": "New name" }
+            item: { "name": "New name" }
           }
 
           expect(response.status).to eq(404)
@@ -202,7 +202,7 @@ describe Api::TodoListsItemsController do
           put :update, format: :json, params: {
             todo_list_id: (todo_list.id + 1),
             id: todo_list_item.id,
-            todo_lists_item: { "name": "New name" }
+            item: { "name": "New name" }
           }
 
           response_body = JSON.parse(response.body)
@@ -217,7 +217,7 @@ describe Api::TodoListsItemsController do
             put :update, format: :json, params: {
               todo_list_id: todo_list.id,
               id: todo_list_item.id,
-              todo_lists_item: { "name": "", "description": "" }
+              item: { "name": "", "description": "" }
             }
 
             expect(response.status).to eq(422)
@@ -227,7 +227,7 @@ describe Api::TodoListsItemsController do
             put :update, format: :json, params: {
               todo_list_id: todo_list.id,
               id: todo_list_item.id,
-              todo_lists_item: { "name": "", "description": "" }
+              item: { "name": "", "description": "" }
             }
 
             response_body = JSON.parse(response.body)
@@ -241,7 +241,7 @@ describe Api::TodoListsItemsController do
             put :update, format: :json, params: {
               todo_list_id: todo_list.id,
               id: todo_list_item.id,
-              todo_lists_item: {
+              item: {
                 "name": "New name",
                 "description": "New description"
               }
@@ -254,7 +254,7 @@ describe Api::TodoListsItemsController do
             put :update, format: :json, params: {
               todo_list_id: todo_list.id,
               id: todo_list_item.id,
-              todo_lists_item: {
+              item: {
                 "name": "New name",
                 "description": "New description"
               }
@@ -275,7 +275,7 @@ describe Api::TodoListsItemsController do
   describe 'GET show' do
     let!(:todo_list) { TodoList.create(name: 'ToDo List #1') }
     let!(:todo_list_item) do
-      TodoListItem.create(
+      Item.create(
         name: 'Item #1',
         description: 'First item',
         todo_list_id: todo_list.id
@@ -335,7 +335,7 @@ describe Api::TodoListsItemsController do
 
             response_body = JSON.parse(response.body)
 
-            expect(response_body['message']).to eq("Couldn't find TodoListItem with id='#{todo_list_item.id + 1}' for TodoList with id='#{todo_list.id}'")
+            expect(response_body['message']).to eq("Couldn't find Item with 'id'=#{todo_list_item.id + 1}")
           end
         end
 
@@ -369,7 +369,7 @@ describe Api::TodoListsItemsController do
   describe 'DELETE destroy' do
     let!(:todo_list) { TodoList.create(name: 'ToDo List #1') }
     let!(:todo_list_item) do
-      TodoListItem.create(
+      Item.create(
         name: 'Item #1',
         description: 'First item',
         todo_list_id: todo_list.id
@@ -429,7 +429,7 @@ describe Api::TodoListsItemsController do
 
             response_body = JSON.parse(response.body)
 
-            expect(response_body['message']).to eq("Couldn't find TodoListItem with id='#{todo_list_item.id + 1}' for TodoList with id='#{todo_list.id}'")
+            expect(response_body['message']).to eq("Couldn't find Item with 'id'=#{todo_list_item.id + 1}")
           end
         end
 

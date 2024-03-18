@@ -1,11 +1,11 @@
 module Api
-  class TodoListsItemsController < ApiController
+  class ItemsController < ApiController
     before_action :check_todo_list_present
-    before_action :set_todo_list_item, only: %i[show update destroy]
+    before_action :set_item, only: %i[show update destroy]
 
     # GET /api/todolists/:todo_list_id/items
     def index
-      @todo_list_items = TodoListItem.where(todo_list_id: params[:todo_list_id])
+      @items = Item.where(todo_list_id: params[:todo_list_id])
       respond_to :json
     end
 
@@ -16,19 +16,19 @@ module Api
 
     # POST /api/todolists/:todo_list_id/items
     def create
-      @todo_list_item = TodoListItem.create!(todo_list_item_params)
+      @item = Item.create!(item_params)
       respond_to :json
     end
 
     # PUT /api/todolists/:todo_list_id/items/:id
     def update
-      @todo_list_item.update!(todo_list_item_params)
+      @item.update!(item_params)
       respond_to :json
     end
 
     # DELETE /api/todolists/:todo_list_id/items/:id
     def destroy
-      @todo_list_item.destroy!
+      @item.destroy!
       respond_to :json
     end
 
@@ -41,15 +41,15 @@ module Api
       ) unless @todo_list.present?
     end
 
-    def set_todo_list_item
-      @todo_list_item = @todo_list.todo_list_items.find_by_id(params[:id])
+    def set_item
+      @item = Item.find(params[:id])
       raise ActiveRecord::RecordNotFound.new(
-        "Couldn't find TodoListItem with id='#{params[:id]}' for TodoList with id='#{@todo_list.id}'"
-      ) unless @todo_list_item.present?
+        "Couldn't find Item with id='#{params[:id]}' for TodoList with id='#{@todo_list.id}'"
+      ) unless @item.present?
     end
 
-    def todo_list_item_params
-      item_params = params.require(:todo_lists_item).permit(:name, :description)
+    def item_params
+      item_params = params.require(:item).permit(:name, :description)
       item_params.merge(todo_list_id: params[:todo_list_id])
     end
   end
