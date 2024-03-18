@@ -1,15 +1,36 @@
-<h2> To Do List Details </h2>
+<h2 class='text-center'> To Do List Details </h2>
 
-<p> Id: <%= @todo_list.id %> </p>
-<p> Name: <%= @todo_list.name %></p>
+<div class='container' style='width: 50%'>
+  <div class='card mb-3'>
+    <div class='card-body'>
+      <h5 class='card-title' > <%= @todo_list.name %> </h5>
+      <p class='card-text'>
+        <% if @todo_list.items.count %>
+          This List contains <%= @todo_list.items.count %> items
+        <% else %>
+          This List does not have any item yet
+        <% end %>
+      </p>
+    </div>
+  </div>
 
-<div> <%= link_to 'Items', todo_list_items_path(@todo_list) %> </div>
-<div>
-  <%= link_to 'Edit List', edit_todo_list_path %>
-  <%= link_to 'Delete List', todo_list_path(@todo_list),
-    data: {
-      turbo_method: :delete,
-      turbo_confirm: 'Are you sure you want to delete the resource?'
-    } %>
+  <div class='row align-items-start'>
+    <div class='col'>
+      <%= link_to 'Items', todo_list_items_path(@todo_list), class: 'btn btn-primary' %>
+    </div>
+    <div class='col'>
+      <%= link_to 'Edit List', edit_todo_list_path, class: 'btn btn-success' %>
+    </div>
+    <div class='col'>
+      <%= link_to 'Delete List', todo_list_path(@todo_list),
+        class: 'btn btn-danger',
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: 'Are you sure you want to delete the resource?'
+        } %>
+    </div>
+    <div class='col'>
+      <%= link_to 'Back to index', todo_lists_path, class: 'btn btn-info' %>
+    </div>
+  </div>
 </div>
-<div> <%= link_to 'Back to index', todo_lists_path %> </div>

@@ -1,14 +1,30 @@
-<h2> To Do List Item Details </h2>
+<h2 class='text-center'> Item Details </h2>
 
-<h3> #<%= @item.id %> | <%= @item.name %> </h3>
-<p> Description: <%= @item.description %> </p>
+<div class='container' style='width: 50%'>
+  <div class='card mb-3'>
+    <div class='card-body'>
+      <h5 class='card-title'> <%= @item.name %> </h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">Description: </h6>
+      <p class='card-text'>
+        <%= @item.description %>
+      </p>
+    </div>
+  </div>
 
-<div>
-  <%= link_to 'Edit Item', edit_todo_list_item_path %>
-  <%= link_to 'Delete Item', todo_list_item_path(@item),
-    data: {
-      turbo_method: :delete,
-      turbo_confirm: 'Are you sure you want to delete the resource?'
-    } %>
+  <div class='row align-items-start'>
+    <div class='col'>
+      <%= link_to 'Edit Item', edit_todo_list_item_path, class: 'btn btn-success' %>
+    </div>
+    <div class='col'>
+      <%= link_to 'Delete Item', todo_list_item_path(@item),
+        class: 'btn btn-danger',
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: 'Are you sure you want to delete the resource?'
+        } %>
+    </div>
+    <div class='col'>
+      <%= link_to 'Back to List', todo_list_path(@todo_list), class: 'btn btn-info' %>
+    </div>
+  </div>
 </div>
-<div> <%= link_to 'Back to List', todo_list_path(@todo_list) %> </div>

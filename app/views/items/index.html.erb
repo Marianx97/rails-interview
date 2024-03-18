@@ -1,17 +1,30 @@
-<h2> <%= @todo_list.name %> </h2>
+<h2 class='text-center'> <%= @todo_list.name %> </h2>
 
-<% if @todo_list.items.count > 0 %>
-  <div>
-    <% @todo_list.items.each do |item| %>
+<div class='container', style='width: 50%'>
+  <div class='mb-2'>
+    <% if @todo_list.items.count > 0 %>
       <div>
-        #<%= item.id %> | <%= link_to item.name, todo_list_item_path(@todo_list, item) %>
+        <div class='card'>
+          <ul class='list-group list-group-flush'>
+            <% @todo_list.items.each do |item| %>
+              <li class='list-group-item'>
+                #<%= item.id %> | <%= link_to item.name, todo_list_item_path(@todo_list, item) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% else %>
+      <div class='card'>
+        <div class='card-body'>
+          <p class='card-text'> This list is empty </p>
+        </div>
       </div>
     <% end %>
   </div>
-<% else %>
-  <p> This list is empty </p>
-<% end %>
 
-<div> <%= link_to 'Add Item to List', new_todo_list_item_path(@todo_list) %> </div>
-
-<div> <%= link_to 'Back to List Details', todo_list_path(@todo_list) %> </div>
+  <div class='row justify-content-between'>
+    <div class='col-4'><%= link_to 'Add Item to List', new_todo_list_item_path(@todo_list), class: 'btn btn-primary' %></div>
+    <div class='col-4'><%= link_to 'Back to List Details', todo_list_path(@todo_list), class: 'btn btn-info' %></div>
+  </div>
+</div>
