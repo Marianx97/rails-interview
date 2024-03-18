@@ -1,0 +1,16 @@
+<%= form_for [@todo_list, @item] do |form| %>
+  <% @item.errors.full_messages.each do |error| %>
+    <div> <%= error %> </div>
+  <% end %>
+
+  <div>
+    <%= form.text_field :name, placeholder: 'To Do List Item Name' %>
+  </div>
+
+  <div>
+    <%= form.text_area :description, placeholder: 'To Do List Item Description' %>
+  </div>
+
+  <%= form.submit 'Sumbit' %>
+  <div><%= link_to 'Cancel', todo_list_path(@todo_list)%></div>
+<% end %>

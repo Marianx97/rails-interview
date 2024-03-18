@@ -3,9 +3,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :todo_lists, only: %i[index show create update destroy], path: :todolists do
-      resources :todo_lists_items, only: %i[index show create update destroy], path: :items
+      resources :items, only: %i[index show create update destroy], path: :items
     end
   end
 
-  resources :todo_lists, path: :todolists
+  resources :todo_lists, path: :todolists do
+    resources :items, path: :items
+  end
+
+  match '*unmatched', to: 'application#render_not_found', via: :all
 end
