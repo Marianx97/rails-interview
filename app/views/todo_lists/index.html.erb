@@ -1,17 +1,15 @@
-<div class='justify-content-center'>
-  <h2 class='text-center'> My To Do Lists </h2>
+<h2 class='text-center'> My To Do Lists </h2>
 
-  <div class='row align-items-start' >
-    <% @todo_lists.each do |todo_list| %>
-      <div class='col mb-2'>
-        <div class='card' style='width: 18rem;'>
-          <div class='card-body'>
-            <h5 class='card-title'> <%= link_to todo_list.name, todo_list_path(todo_list) %> </h5>
-          </div>
+<div class='row align-items-start' >
+  <% @todo_lists.each do |todo_list| %>
+    <div class='col-4 mb-2'>
+      <div class='card' style='width: 18rem;'>
+        <div class='card-body'>
+          <h5 class='card-title'> <%= link_to todo_list.name, todo_list_path(todo_list) %> </h5>
         </div>
       </div>
-    <% end %>
-  </div>
-
-  <%= link_to 'Add To Do List', new_todo_list_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
 </div>
+
+<%= link_to 'Add To Do List', new_todo_list_path, class: 'btn btn-primary' %>
